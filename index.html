@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Requisitos para Rodar Jogos no PC | Teste seu PC</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #020617);
+      color: white;
+    }
+
+    header {
+      background: #020617;
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #38bdf8;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .container {
+      padding: 30px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+    }
+
+    .game {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .game:hover {
+      background: #334155;
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 30px;
+      background: #020617;
+      padding: 20px;
+      border-radius: 12px;
+      display: none;
+    }
+
+    h2 {
+      color: #22c55e;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  🎮 PC Roda Jogos? (Guia de Requisitos)
+</header>
+
+<div class="container">
+
+  <input type="text" id="search" placeholder="Pesquisar jogo..." onkeyup="filtrarJogos()">
+
+  <div class="grid" id="listaJogos"></div>
+
+  <div class="result" id="resultado"></div>
+
+</div>
+
+<script>
+const jogos = [
+  {
+    nome: "GTA V",
+    minimo: "CPU: Core 2 Quad | RAM: 4GB | GPU: GTX 660",
+    recomendado: "CPU: Core i5 | RAM: 8GB | GPU: GTX 1060"
+  },
+  {
+    nome: "Fortnite",
+    minimo: "CPU: Core i3 | RAM: 4GB | GPU: Intel HD 4000",
+    recomendado: "CPU: Core i5 | RAM: 8GB | GPU: GTX 960"
+  },
+  {
+    nome: "Warzone",
+    minimo: "CPU: i3 6100 | RAM: 8GB | GPU: GTX 960",
+    recomendado: "CPU: i5 8600K | RAM: 16GB | GPU: RTX 2060"
+  },
+  {
+    nome: "Valorant",
+    minimo: "CPU: Core 2 Duo | RAM: 4GB | GPU: Intel HD 3000",
+    recomendado: "CPU: Core i5 | RAM: 8GB | GPU: GTX 1050"
+  },
+  {
+    nome: "CS2",
+    minimo: "CPU: i5 750 | RAM: 8GB | GPU: GTX 660",
+    recomendado: "CPU: i5 10400 | RAM: 16GB | GPU: GTX 1660"
+  },
+  {
+    nome: "Minecraft",
+    minimo: "CPU: Core i3 | RAM: 4GB | GPU: Intel HD",
+    recomendado: "CPU: Core i5 | RAM: 8GB | GPU: GTX 1050"
+  },
+  {
+    nome: "Red Dead 2",
+    minimo: "CPU: i5 2500K | RAM: 8GB | GPU: GTX 770",
+    recomendado: "CPU: i7 4770 | RAM: 12GB | GPU: GTX 1060"
+  },
+  {
+    nome: "Cyberpunk 2077",
+    minimo: "CPU: i5 3570K | RAM: 8GB | GPU: GTX 970",
+    recomendado: "CPU: i7 8700 | RAM: 16GB | GPU: RTX 2060"
+  }
+];
+
+const lista = document.getElementById("listaJogos");
+
+function carregarJogos() {
+  lista.innerHTML = "";
+  jogos.forEach((jogo, index) => {
+    lista.innerHTML += `
+      <div class="game" onclick="mostrar(${index})">
+        ${jogo.nome}
+      </div>
+    `;
+  });
+}
+
+function mostrar(index) {
+  const jogo = jogos[index];
+  const res = document.getElementById("resultado");
+
+  res.style.display = "block";
+  res.innerHTML = `
+    <h2>${jogo.nome}</h2>
+    <p><b>Mínimos:</b><br>${jogo.minimo}</p>
+    <p><b>Recomendados:</b><br>${jogo.recomendado}</p>
+  `;
+}
+
+function filtrarJogos() {
+  const texto = document.getElementById("search").value.toLowerCase();
+  lista.innerHTML = "";
+
+  jogos.forEach((jogo, index) => {
+    if (jogo.nome.toLowerCase().includes(texto)) {
+      lista.innerHTML += `
+        <div class="game" onclick="mostrar(${index})">
+          ${jogo.nome}
+        </div>
+      `;
+    }
+  });
+}
+
+carregarJogos();
+</script>
+
+</body>
+</html>
